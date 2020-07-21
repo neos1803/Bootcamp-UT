@@ -73,4 +73,4 @@ const text = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do ei
 //newStr.count('lorem ipsum')
 //newStr.countWords("lorem ipsum")
 //newStr.trim(text, 20, "----");
-newStr.trimWords(text, 3);
+//newStr.trimWords(text, 3);
