@@ -4,16 +4,24 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest",
+    "start": "node app.js"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/neos1803/Bootcamp-UT.git"
   },
+  "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/neos1803/Bootcamp-UT/issues"
   },
-  "homepage": "https://github.com/neos1803/Bootcamp-UT#readme"
+  "homepage": "https://github.com/neos1803/Bootcamp-UT#readme",
+  "dependencies": {
+    "dotenv": "^8.2.0"
+  },
+  "devDependencies": {
+    "jest": "^26.1.0"
+  }
 }
