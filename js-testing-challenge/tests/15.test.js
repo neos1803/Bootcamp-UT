@@ -1,4 +1,4 @@
-const roman = require('../15')
+const roman = require('../src/15')
 
 test("Function check", () =>{ 
     expect(roman("I")).toBe(1);
