@@ -19,6 +19,8 @@
   },
   "homepage": "https://github.com/neos1803/Bootcamp-UT#readme",
   "dependencies": {
+    "@caporal/core": "^2.0.2",
+    "caporal": "^1.4.0",
     "dotenv": "^8.2.0"
   },
   "devDependencies": {

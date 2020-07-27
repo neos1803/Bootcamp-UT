@@ -4,3 +4,7 @@ function mebiToKibi(mebi) {
 }
 
 module.exports = mebiToKibi;
+
+// const mebiToKibi = number => number * 1024;
+
+// module.exports = mebiToKibi;

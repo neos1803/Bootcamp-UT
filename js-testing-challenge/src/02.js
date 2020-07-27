@@ -1,5 +1,3 @@
-function sum(x, y) {
-    return x + y;
-}
+const sum = (x, y) => x+y;
 
 module.exports = sum;
