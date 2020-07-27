@@ -1,12 +1,24 @@
 #!/usr/bin/env node
 
 const { program } = require("@caporal/core");
-const { parse } = require("caporal");
-const JavaScriptObfuscator = require("javascript-obfuscator");
+const { parse, option } = require("caporal");
 const os = require("os");
-const externalip = require('external-ip')();
+const scraperjs = require("scraperjs");
+// const externalip = require('external-ip')();
+const lowerStr = 'abcdefghijklmnoopqrstuvwxyz';
+const numeric = '1234567890';
+const upperStr = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+const charRandom = (str, n) => {
+    let res = [];
+    for (let i = 0; i < n; i++) {
+        res.push(str[Math.floor(Math.random() * str.length)]);
+    }
+    return res.join("");
+}
+const str = [...lowerStr, ...numeric, ...upperStr];
 
 program
+    // Task 1
     .command("lowercase", "To Lowercase")
     .argument("<text>", "Insert text")
     .action(({ logger, args }) => {
@@ -25,6 +37,7 @@ program
         logger.info(`${args.text.split(" ").map((value) => value.replace(value.charAt(0), value.charAt(0).toUpperCase())).join(" ")}`)
     })
 
+    // Task 2
     .command("add", "To Add")
     .argument("[env...]", "Other")
     .action(({ args }) => {
@@ -61,27 +74,67 @@ program
         console.log(divide)
     })
 
+    // Task 3
     .command("palindrome", "Is Palindrome")
     .argument("<text>", "Text")
     .action(({ args }) => {
         console.log(`Is Palindrome? ${args.text.toLowerCase().replace(/[\W_]/g, "").split("").reverse().join("") == args.text.toLowerCase().replace(/[\W_]/g, "")}`)
     })
 
+    // Task 4
     .command("obfuscate", "To Obfuscate")
     .argument("<text>", "Text")
     .action(({ args }) => {
-        let obfuscation = JavaScriptObfuscator.obfuscate(args.text);
-        console.log(obfuscation.getObfuscatedCode())
+        console.log(args.text.split("").map(value => `&#/${value.charAt(0)}`).join(""))
     })
 
+    // Task 5
     .command("random", "To Random")
-    .option("--length=<number>", "Length")
-    .action(({ args, options }) => {
-        if(options.length) {
-            console.log(`is ${options.length}`)
+    .option("--leng <leng>", "Length", {
+        validator: program.NUMBER,
+        default:32,
+    })
+    .option("--letters <letters>", "Contain letter or not", {
+        default: true,
+        validator: program.BOOLEAN
+    })
+    .option("--numbers <numbers>", "Contain numbers or not", {
+        default: true,
+        validator: program.BOOLEAN,
+    })
+    .option("--lower <lower>", "Lowercase or not", {
+        default: true,
+        validator: program.BOOLEAN,
+    })
+    .option("--upper <upper>", "Uppercase or not", {
+        default: true,
+        validator: program.BOOLEAN,
+    })
+    .action(({ options }) => {
+        if (!options.letters && !options.numbers) {
+            console.log("");
+        } else if (options.letters || !options.numbers) {
+            if (!options.upper) {
+                console.log(charRandom([...lowerStr, ...upperStr], options.leng).toLowerCase());    
+            } else if (!options.lower) {
+                console.log(charRandom([...lowerStr, ...upperStr], options.leng).toUpperCase());
+            }
+        } else if (!options.letters || options.numbers) {
+            if (!options.upper) {
+                console.log(charRandom([...numeric], options.leng).toLowerCase());    
+            } else if (!options.lower) {
+                console.log(charRandom([...numeric], options.leng).toUpperCase());
+            }
+        } else {
+            if (!options.upper) {
+                console.log(charRandom(str, options.leng).toLowerCase());    
+            } else if (!options.lower) {
+                console.log(charRandom(str, options.leng).toUpperCase());
+            }
         }
     })
-
+    
+    // Task 6
     .command("ip")
     .action(({}) => {
         const interface = os.networkInterfaces();
@@ -97,11 +150,28 @@ program
         console.log(addresses.toString())
     })
 
+    // Task 7
     .command("ip-external")
     .action(({}) => {
         externalip((err, ip) => {
             console.log(ip)
         })
     })
+
+    // Task 8
+    .command("headlines")
+    .action( async ({}) => {
+        scraperjs.StaticScraper.create("https://kompas.com")
+            .scrape(function($) {
+                return $(".article__link").map(function() {
+                    return $(this).text();
+                }).get();
+            })
+            .then(function(news) {
+                console.log(news.map(value => "title: " + value).join("\n"))
+            })
+    })
+
+    // Task 9
 
 program.run();
