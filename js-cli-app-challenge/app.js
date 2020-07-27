@@ -3,6 +3,8 @@
 const { program } = require("@caporal/core");
 const { parse } = require("caporal");
 const JavaScriptObfuscator = require("javascript-obfuscator");
+const os = require("os");
+const externalip = require('external-ip')();
 
 program
     .command("lowercase", "To Lowercase")
@@ -74,6 +76,32 @@ program
 
     .command("random", "To Random")
     .option("--length=<number>", "Length")
-    
+    .action(({ args, options }) => {
+        if(options.length) {
+            console.log(`is ${options.length}`)
+        }
+    })
+
+    .command("ip")
+    .action(({}) => {
+        const interface = os.networkInterfaces();
+        let addresses = [];
+        for (let k in interface) {
+            for (let l in interface[k]) {
+                let addr = interface[k][l];
+                if (addr.family === "IPv4" && !addr.internal) {
+                    addresses.push(addr.address);
+                }
+            }
+        }
+        console.log(addresses.toString())
+    })
+
+    .command("ip-external")
+    .action(({}) => {
+        externalip((err, ip) => {
+            console.log(ip)
+        })
+    })
 
 program.run();
