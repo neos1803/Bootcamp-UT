@@ -34,4 +34,10 @@ program
         TodoController.delete(args.number)
     })
 
+    .command("undone")
+    .argument("<number>")
+    .action(({ args }) => {
+        TodoController.update(args.number, null, null)
+    })
+
 program.run()

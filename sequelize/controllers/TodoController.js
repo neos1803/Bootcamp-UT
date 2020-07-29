@@ -48,6 +48,18 @@ class Controller {
                 console.log("Task completed")
             })
             .catch(err => console.log(err))
+        } else {
+            models.Todolist.update({
+                status: null
+            }, {
+                where: {
+                    id: id
+                }
+            })
+            .then(() => {
+                console.log("Task uncompleted")
+            })
+            .catch(err => console.log(err))
         }
     }
 
@@ -60,7 +72,7 @@ class Controller {
         .then(() => console.log("Deleted"))
         .catch(err => console.log(err))
     }
-    
+
 }
 
 module.exports = Controller;
