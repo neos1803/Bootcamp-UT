@@ -2,7 +2,20 @@
 
 const mongoose = require("mongoose");
 const { program } = require("@caporal/core");
-const TodoController = require("./controllers/TodoController");
+const TodoController = require("./controller/TodoController");
+
+mongoose.connect("mongodb://127.0.0.1:27017/todo_db", {
+    useNewUrlParser: true, 
+    useCreateIndex: true, 
+    useUnifiedTopology: true
+    }, function(error) {
+    if (error) {
+        console.log(error)
+    } else {
+        console.log("Connected")
+    }
+});
+
 
 program
     .command("list")
