@@ -42,6 +42,14 @@ class Controller {
     static delete(number) {
         Todolist.findOneAndDelete({ user_id: number }).then(() => console.log("Deleted")).catch(err => console.log(err))
     }
+
+    static destroy() {
+
+    }
+
+    static read() {
+        
+    }
 }
 
 module.exports = Controller;

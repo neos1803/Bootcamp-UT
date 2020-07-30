@@ -54,4 +54,18 @@ program
         TodoController.update(args.number, null, null)
     })
 
+    .command("clear")
+    .action(({}) => {
+        const yes = yesno({
+            question: "Menghapus semua list? (Y/N)",
+            yesValues: ["Y"],
+            noValues: ["N"]
+        });
+        if (yes) {
+            TodoController.destroy();
+        } else {
+            console.log("Fail to destroy")
+        }
+    })
+
 program.run()
