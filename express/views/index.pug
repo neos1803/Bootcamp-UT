@@ -2,13 +2,41 @@ extends layout
 
 block content
     h3 Todo Tasks List
-    form(action="/todo/post", method="post")
+    form(action="/task/add", method="post")
         .form-group
             label Task:
-            input.form-control(name="task", type="text")
+            input.form-control(name="name", type="text")
         .form-group
             label Description:
-            input.form-controle(name="description", type="text")
-        input.btn.btn-primary(type="submit")
+            input.form-control(name="description", type="text")
+        input.btn.btn-primary(type="submit", value="Submit")
     br
     // read all task
+    table(style="width:100%", border="1")
+        thead
+            tr
+                th No.
+                th Task
+                th Description
+                th Status
+                th Done/Undone
+                th Edit
+                th Delete
+        tbody
+            each task, i in tasks  
+                tr
+                    th #{i+1}
+                    th=task.name
+                    th=task.description
+                    if(task.status == false)
+                        th="Undone"
+                        th
+                            a.btn.btn-default(href="/task/status/update"+task._id) Done Task
+                    else
+                        th="Done"
+                        th
+                            a.btn.btn-default(href="/task/status/update"+task._id) Undone
+                    th
+                        a.btn.btn-default(href="/task/edit/"+task._id) Edit
+                    th
+                        a.btn.btn-danger.delete-task(href='#', data-id=task._id) Delete

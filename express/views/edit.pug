@@ -1,0 +1,13 @@
+extends layout
+
+block content
+    h3 Todo Tasks List
+    form(action="/task/edit/"+task._id, method="post")
+        .form-group
+            label Task:
+            input.form-control(name="name", type="text", value=task.name)
+        .form-group
+            label Description:
+            input.form-control(name="description", type="text", value=task.description)
+        input.btn.btn-primary(type="submit", value="Submit")
+    br
