@@ -31,11 +31,11 @@ block content
                     if(task.status == false)
                         th="Undone"
                         th
-                            a.btn.btn-default(href="/task/status/update"+task._id) Done Task
+                            a.btn.btn-default(href="/task/update/"+task._id+"/"+task.status) Done Task
                     else
                         th="Done"
                         th
-                            a.btn.btn-default(href="/task/status/update"+task._id) Undone
+                            a.btn.btn-default(href="/task/update/"+task._id+"/"+task.status) Undone
                     th
                         a.btn.btn-default(href="/task/edit/"+task._id) Edit
                     th

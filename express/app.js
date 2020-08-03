@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 const express = require("express");
 const path = require("path");
 const bodyParser = require("body-parser");
-const router = express.Router();
+// const router = express.Router();
 const TaskController = require("./controllers/TaskController")
 const Task = require("./models/Task")
 
@@ -79,15 +79,18 @@ app.post("/task/edit/:id", function(req, res) {
     })
 })
 
-app.post("/task/update/:id", function(req, res) {
+app.get("/task/update/:id/:status", async function(req, res) {
     let update = {};
+    const status = req.params.status;
     let par = {_id: req.params.id};
-    if (req.params.status == false) {
+    
+    if (status == "false") {
         update.status = true
     } else {
         update.status = false
     }
-    Task.findOneAndUpdate(par, update, (err) => {
+
+    await Task.findOneAndUpdate(par, update, (err) => {
         if(err) {
             console.log(err)
         } else {
