@@ -3,7 +3,7 @@ const express = require("express");
 const path = require("path");
 const bodyParser = require("body-parser");
 // const router = express.Router();
-const TaskController = require("./controllers/TaskController")
+// const TaskController = require("./controllers/TaskController")
 const Task = require("./models/Task")
 
 // Connecting DB
@@ -50,8 +50,16 @@ app.get("/", function(req, res) {
 });
 
 app.post("/task/add", function(req, res) {
-    TaskController.add(req.body.name, req.body.description);
-    res.redirect("/");
+    let task = new Task();
+    task.name = req.body.name;
+    task.description = req.body.description;
+
+    task.save()
+        .then(() => {
+            console.log("Success")
+            res.redirect("/");
+        })
+        .catch(err => console.log(err))
 });
 
 app.get("/task/edit/:id", function(req, res) {
