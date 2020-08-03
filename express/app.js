@@ -97,15 +97,9 @@ app.post("/task/update/:id", function(req, res) {
     })
 })
 
-app.delete("/task/delete/:id", function(req, res) {
-    Task.remove({_id: req.params.id}, (err) => {
-        if(err) {
-            console.log(err);
-        } else {
-            console.log("Deleted");
-            res.redirect("/")
-        }
-    })
+app.get("/task/delete/:id", async function(req, res) {
+    await Task.findByIdAndDelete({ _id: req.params.id})
+    res.redirect("/")
 })
 
 app.listen(3000, function(){
