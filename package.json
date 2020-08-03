@@ -20,8 +20,21 @@
   "homepage": "https://github.com/neos1803/Bootcamp-UT#readme",
   "dependencies": {
     "@caporal/core": "^2.0.2",
+    "axios": "^0.19.2",
+    "body-parser": "^1.19.0",
     "caporal": "^1.4.0",
-    "dotenv": "^8.2.0"
+    "cheerio": "^1.0.0-rc.3",
+    "commander": "^6.0.0",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "external-ip": "^2.3.1",
+    "javascript-obfuscator": "^1.8.0",
+    "mongoose": "^5.9.26",
+    "mysql2": "^2.1.0",
+    "pg": "^8.3.0",
+    "pug": "^3.0.0",
+    "sequelize": "^6.3.3",
+    "sequelize-cli": "^6.2.0"
   },
   "devDependencies": {
     "jest": "^26.1.0"

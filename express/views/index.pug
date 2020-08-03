@@ -1,0 +1,14 @@
+extends layout
+
+block content
+    h3 Todo Tasks List
+    form(action="/todo/post", method="post")
+        .form-group
+            label Task:
+            input.form-control(name="task", type="text")
+        .form-group
+            label Description:
+            input.form-controle(name="description", type="text")
+        input.btn.btn-primary(type="submit")
+    br
+    // read all task
