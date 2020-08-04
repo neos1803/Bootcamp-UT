@@ -18,9 +18,9 @@ const upload = multer({ storage })
 
 /* GET users listing. */
 router.post('/add', [upload.single('images'), TaskController.add]);
-router.get('/edit/:id', TaskController.find);
-router.post('/edit/:id', [upload.single('images'), TaskController.update]);
-router.put('/update/:id/:status', TaskController.doneUndone);
+router.get('/:id/edit', TaskController.find);
+router.post('/:id/edit', [upload.single('images'), TaskController.update]);
+router.put('/:id/:status/update', TaskController.doneUndone);
 router.delete('/:id', TaskController.destroy)
 
 module.exports = router;

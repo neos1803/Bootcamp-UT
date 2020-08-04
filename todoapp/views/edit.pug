@@ -2,7 +2,7 @@ extends layout
 
 block content
     h3 Todo Tasks List
-    form(action="/users/edit/"+task._id, method="post", enctype="multipart/form-data")
+    form(action="/users/" + task._id + "/edit", method="post", enctype="multipart/form-data")
         .form-group
             label Task:
             input.form-control(name="name", type="text", value=task.name)

@@ -38,15 +38,15 @@ block content
                     if(task.status == false)
                         th="Undone"
                         th
-                          form(method="POST" action="/users/update/" + task._id + "/" + task.status + "?_method=PUT")
+                          form(method="POST" action="/users/" + task._id + "/" + task.status + "/update?_method=PUT")
                             input.btn.btn-primary(type="submit", value="Done")
                     else
                         th="Done"
                         th
-                          form(method="POST" action="/users/update/" + task._id + "/" + task.status + "?_method=PUT")
+                          form(method="POST" action="/users/" + task._id + "/" + task.status + "/update?_method=PUT")
                             input.btn.btn-primary(type="submit", value="Undone")
                     th
-                        a.btn.btn-default(href="/users/edit/"+task._id) Edit
+                        a.btn.btn-default(href="/users/" + task._id + "/edit") Edit
                     th
                         form(method="POST" action="/users/" + task._id + "?_method=DELETE")
                           input.btn.btn-primary(type="submit", value="Delete")
