@@ -1,0 +1,52 @@
+extends layout
+
+block content
+    h3 Todo Tasks List
+    form(action="/users/add", method="post", enctype="multipart/form-data")
+        .form-group
+            label Task:
+            input.form-control(name="name", type="text")
+        .form-group
+            label Description:
+            input.form-control(name="description", type="text")
+        .form-group
+            label Photo:
+            input.form-control(name="images", type="file")
+        input.btn.btn-primary(type="submit", value="Submit")
+    br
+    // read all task
+    table(style="width:100%", border="1")
+        thead
+            tr
+                th No.
+                th Task
+                th Description
+                th Images
+                th Status
+                th Done/Undone
+                th Edit
+                th Delete
+        tbody
+        if(tasks)
+            each task, i in tasks  
+                tr
+                    th #{i+1}
+                    th=task.name
+                    th=task.description
+                    th
+                      img(src="../images/"+task.image, alt="image", style="width:100%")
+                    if(task.status == false)
+                        th="Undone"
+                        th
+                          form(method="POST" action="/users/update/" + task._id + "/" + task.status + "?_method=PUT")
+                            input.btn.btn-primary(type="submit", value="Done")
+                    else
+                        th="Done"
+                        th
+                          form(method="POST" action="/users/update/" + task._id + "/" + task.status + "?_method=PUT")
+                            input.btn.btn-primary(type="submit", value="Undone")
+                    th
+                        a.btn.btn-default(href="/users/edit/"+task._id) Edit
+                    th
+                        form(method="POST" action="/users/" + task._id + "?_method=DELETE")
+                          input.btn.btn-primary(type="submit", value="Delete")
