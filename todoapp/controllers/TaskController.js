@@ -2,7 +2,6 @@ const Task = require("../models/Task");
 const multer = require("multer")
 const path = require("path")
 const fs = require("fs");
-const { findByIdAndDelete } = require("../models/Task");
 
 class Controller {
     static async add(req, res) {
@@ -41,9 +40,18 @@ class Controller {
 
     static async update(req, res) {
         let update = {};
-        update.name = req.body.name;
-        update.description = req.body.description;
-        update.image = req.file.filename;
+        let imagePath = path.join(__dirname, './../public/images/');
+        if(req.file) {
+            const data = await Task.findById({ _id: req.params.id }).exec();
+            imagePath = imagePath + data.image;
+            fs.unlinkSync(imagePath)
+            update.name = req.body.name;
+            update.description = req.body.description;
+            update.image = req.file.filename;    
+        } else {
+            update.name = req.body.name;
+            update.description = req.body.description;
+        }
 
         let par = {_id: req.params.id};
 
@@ -58,7 +66,11 @@ class Controller {
     }
 
     static async destroy(req, res) {
+        let imagePath = path.join(__dirname, './../public/images/');
+        const data = await Task.findById({ _id: req.params.id }).exec();
+        imagePath = imagePath + data.image;
         await Task.findByIdAndDelete({ _id: req.params.id })
+        fs.unlinkSync(imagePath)
         res.redirect('/')
     }
 
@@ -69,7 +81,7 @@ class Controller {
     
         if (status == "false") {
             update.status = true
-        } else {
+        } else {    
             update.status = false
         }
 
