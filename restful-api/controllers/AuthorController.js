@@ -22,7 +22,7 @@ class Controller {
         
             res.status(201).json(response);
         } catch (error) {
-            response.status = false,
+            response.status = "Fail",
             response.message = error.message,
             res.status(400).json(response)
         }
@@ -41,7 +41,7 @@ class Controller {
         
             res.status(200).json(response);
         } catch (error) {
-            response.status = false,
+            response.status = "Fail",
             response.message = error.message;
             res.status(400).json(response)
         }
@@ -60,7 +60,7 @@ class Controller {
     
             res.json(response)
         } catch (error) {
-            response.status = false,
+            response.status = "Fail",
             response.message = error.message;
             res.status(400).json(response)
         }
@@ -84,7 +84,7 @@ class Controller {
         
             res.status(201).json(response);
         } catch (error) {
-            response.status = false,
+            response.status = "Fail",
             response.message = error.message,
             res.status(400).json(response)
         }
@@ -102,7 +102,7 @@ class Controller {
         
             res.status(201).json(response);
         } catch (error) {
-            response.status = false,
+            response.status = "Fail",
             response.message = error.message,
             res.status(400).json(response)
         }
