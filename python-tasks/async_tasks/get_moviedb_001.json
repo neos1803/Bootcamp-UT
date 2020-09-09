@@ -1,0 +1,73 @@
+{
+   "result": [
+      {
+         "popularity": 60.303,
+         "known_for_department": "Acting",
+         "gender": 2,
+         "id": 6384,
+         "profile_path": "/d9HyjGMCt4wgJIOxAGlaYWhKsiN.jpg",
+         "adult": false,
+         "known_for": [
+            {
+               "poster_path": "/dXNAPwY7VrqMAo51EKhhCJfaGb5.jpg",
+               "id": 603,
+               "vote_count": 17699,
+               "video": false,
+               "media_type": "movie",
+               "adult": false,
+               "backdrop_path": "/fNG7i7RqMErkcqhohV2a6cV1Ehy.jpg",
+               "genre_ids": [
+                  28,
+                  878
+               ],
+               "original_title": "The Matrix",
+               "original_language": "en",
+               "title": "The Matrix",
+               "vote_average": 8.1,
+               "overview": "Set in the 22nd century, The Matrix tells the story of a computer hacker who joins a group of underground insurgents fighting the vast and powerful computers who now rule the earth.",
+               "release_date": "1999-03-30"
+            },
+            {
+               "release_date": "2014-10-22",
+               "id": 245891,
+               "vote_count": 13165,
+               "video": false,
+               "media_type": "movie",
+               "vote_average": 7.3,
+               "title": "John Wick",
+               "genre_ids": [
+                  28,
+                  53
+               ],
+               "original_title": "John Wick",
+               "original_language": "en",
+               "adult": false,
+               "backdrop_path": "/7dzngS8pLkGJpyeskCFcjPO9qLF.jpg",
+               "overview": "Ex-hitman John Wick comes out of retirement to track down the gangsters that took everything from him.",
+               "poster_path": "/h3VxEVUOoBZmo79O8RqKvyGiqmE.jpg"
+            },
+            {
+               "release_date": "2017-02-08",
+               "id": 324552,
+               "vote_count": 8227,
+               "video": false,
+               "media_type": "movie",
+               "vote_average": 7.2,
+               "title": "John Wick: Chapter 2",
+               "genre_ids": [
+                  28,
+                  80,
+                  53
+               ],
+               "original_title": "John Wick: Chapter 2",
+               "original_language": "en",
+               "adult": false,
+               "backdrop_path": "/fRLftkwv8jm3DLxXOf2NbngHjPB.jpg",
+               "overview": "John Wick is forced out of retirement by a former associate looking to seize control of a shadowy international assassins\u2019 guild. Bound by a blood oath to aid him, Wick travels to Rome and does battle against some of the world\u2019s most dangerous killers.",
+               "poster_path": "/hXWBc0ioZP3cN4zCu6SN3YHXZVO.jpg"
+            }
+         ],
+         "name": "Keanu Reeves"
+      }
+   ]
+}
