@@ -14,6 +14,9 @@ def utc_converter(utc):
     converted_date = dt.strptime(conv, "%Y-%m-%d %H:%M:%S")
     return converted_date
 
+def datetime_converter(time):
+    return dt.strptime(time, "%Y-%m-%d %H:%M:%S")
+
 @click.group()
 def cli():
     pass
@@ -73,6 +76,19 @@ def weather(city, fahrenheit, celcius, temp, cities):
             sunset: {sunset.strftime("%A")}, {calendar.month_name[sunset.month]} {sunset.month}, {sunset.year} {sunset.hour}:{sunset.minute}:{sunset.second}
             """)
 
-# @cli.command(name="forecast")
-# @click.argument("city")
-# def forecast(city):
+@cli.command(name="forecast")
+@click.argument("city")
+@click.option("--days", is_flag=True)
+def forecast(city, days):
+    response = requests.get(f"https://api.openweathermap.org/data/2.5/forecast?q={city}&appid={config('API_KEY')}")
+    res = json.loads(response.text)
+    if days:
+        name = f"{res['list'][0]['dt']}_{city}.json"
+        print("processing...")
+        with open(name, "w") as new_file:
+            json.dump(res["list"], new_file, indent=3)
+            print("done")
+        return print(f"saved into {name}")
+    else:
+        return print(tabulate([f"{datetime_converter(l['dt_txt']).hour}:{datetime_converter(l['dt_txt']).minute} | {l['main']['temp'] - 273.15}°C | {l['weather'][0]['main']}, {l['weather'][0]['description']}"] for l in res["list"] if datetime_converter(l["dt_txt"]).day == datetime_converter(res["list"][0]["dt_txt"]).day))
+        # for l in res["list"]:
