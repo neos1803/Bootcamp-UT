@@ -9,7 +9,8 @@ setup(
         'Click',
         'Requests',
         'Tabulate',
-        'Python-Decouple'
+        'Python-Decouple',
+        'Json',
         # tambahkan package yang kalian gunakan untuk membangun aplikasi disini!
     ],
     # buatlah nama app nya cliweather
