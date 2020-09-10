@@ -5,6 +5,7 @@ import click
 import json
 from datetime import datetime as dt
 import calendar
+import statistics
 
 # def isAMPM(hour):
 #     if 0<
@@ -91,4 +92,42 @@ def forecast(city, days):
         return print(f"saved into {name}")
     else:
         return print(tabulate([f"{datetime_converter(l['dt_txt']).hour}:{datetime_converter(l['dt_txt']).minute} | {l['main']['temp'] - 273.15}°C | {l['weather'][0]['main']}, {l['weather'][0]['description']}"] for l in res["list"] if datetime_converter(l["dt_txt"]).day == datetime_converter(res["list"][0]["dt_txt"]).day))
-        # for l in res["list"]:
+
+@cli.command(name="dailyforecast")
+@click.argument("city")
+@click.option("--cities", multiple=True, nargs=3)
+def dailyForecast(city, cities):
+    if cities:
+        return print("masih belum")
+    else:
+        daily_temp = []
+        with open("./city_id.json") as json_file:
+            data = json.loads(json_file.read())
+        lon = [d['coord']['lon'] for d in data if d["name"].lower() == city.lower()][0]
+        lat = [d['coord']['lat'] for d in data if d["name"].lower() == city.lower()][0]
+        # print(lon)
+        # print(json.dumps(data, indent=3))
+        # for d in data:
+        #     print(d["coord"])
+        response = requests.get(f"https://api.openweathermap.org/data/2.5/onecall?lat={lat}&lon={lon}&exclude=minutely,daily&appid={config('API_KEY')}")
+        res = json.loads(response.text)
+        for i in range(3):
+            morning = [r["temp"] for r in res["hourly"] if 0 <= utc_converter(r["dt"]).hour <= 11 and utc_converter(r["dt"]).day == utc_converter(res["current"]["dt"]).day + i]
+            evening = [r["temp"] for r in res["hourly"] if 12 <= utc_converter(r["dt"]).hour <= 17 and utc_converter(r["dt"]).day == utc_converter(res["current"]["dt"]).day + i]
+            night = [r["temp"] for r in res["hourly"] if 18 <= utc_converter(r["dt"]).hour <= 23 and utc_converter(r["dt"]).day == utc_converter(res["current"]["dt"]).day + i]
+            if morning:
+                daily_temp.append({f"{utc_converter(res['current']['dt']).day + i}" : {"Morning" : statistics.mean(morning)}})
+            if evening:
+                daily_temp.append({f"{utc_converter(res['current']['dt']).day + i}" : {"Evening" : statistics.mean(evening)}})
+            if night:
+                daily_temp.append({f"{utc_converter(res['current']['dt']).day + i}" : {"Night" : statistics.mean(night)}})
+        
+        print(json.dumps(daily_temp, indent=3))
+            # if utc_converter(r["dt"]).day == utc_converter(res["current"]["dt"]).day:
+            #     if 0 <= utc_converter(r["dt"]).hour <= 11:
+        # morning = [r["temp"] for r in res["hourly"] if 0 <= utc_converter(r["dt"]).hour <= 11]
+        # evening = [r["temp"] for r in res["hourly"] if 12 <= utc_converter(r["dt"]).hour <= 17]
+        # night = [r["temp"] for r in res["hourly"] if 18 <= utc_converter(r["dt"]).hour <= 23]
+        # print(morning, "\n", evening, "\n", night)
+        # return print(tabulate([f"{utc_converter(r['dt']).strftime('%A')} {utc_converter(r['dt']).hour}"] for r in res["hourly"]))
+        # print(json.dumps(res, indent=3))
