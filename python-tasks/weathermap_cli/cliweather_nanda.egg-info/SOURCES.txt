@@ -1,0 +1,9 @@
+setup.py
+cliweather_nanda.egg-info/PKG-INFO
+cliweather_nanda.egg-info/SOURCES.txt
+cliweather_nanda.egg-info/dependency_links.txt
+cliweather_nanda.egg-info/entry_points.txt
+cliweather_nanda.egg-info/requires.txt
+cliweather_nanda.egg-info/top_level.txt
+src/__init__.py
+src/scripts.py
