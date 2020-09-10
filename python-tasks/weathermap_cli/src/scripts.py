@@ -94,11 +94,27 @@ def forecast(city, days):
         return print(tabulate([f"{datetime_converter(l['dt_txt']).hour}:{datetime_converter(l['dt_txt']).minute} | {l['main']['temp'] - 273.15}°C | {l['weather'][0]['main']}, {l['weather'][0]['description']}"] for l in res["list"] if datetime_converter(l["dt_txt"]).day == datetime_converter(res["list"][0]["dt_txt"]).day))
 
 @cli.command(name="dailyforecast")
-@click.argument("city")
-@click.option("--cities", multiple=True, nargs=3)
+@click.argument("city", nargs=-1)
+@click.option("--cities", is_flag=True)
 def dailyForecast(city, cities):
     if cities:
-        return print("masih belum")
+        # return print("masih belum")
+        response = []
+        with open("./city_id.json") as json_file:
+            data = json.loads(json_file.read())
+        for c in city:
+            lon = [d['coord']['lon'] for d in data if d['name'].lower() == c.lower()][0]
+            lat = [d['coord']['lat'] for d in data if d['name'].lower() == c.lower()][0]
+            res = requests.get(f"https://api.openweathermap.org/data/2.5/onecall?lat={lat}&lon={lon}&exclude=minutely,daily&appid={config('API_KEY')}")
+            result = json.loads(res.text)
+            response.append(result)
+            # print(json.dumps(result, indent=3))
+        name = f"{response[0]['current']['dt']}_dailyforecast.json"
+        with open(name, "w") as new_file:
+            print("processing...")
+            json.dump(response, new_file, indent=3)
+            print("done")
+        return print(f"saved into {name}")
     else:
         daily_temp = []
         with open("./city_id.json") as json_file:
