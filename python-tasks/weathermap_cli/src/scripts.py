@@ -111,17 +111,36 @@ def dailyForecast(city, cities):
         #     print(d["coord"])
         response = requests.get(f"https://api.openweathermap.org/data/2.5/onecall?lat={lat}&lon={lon}&exclude=minutely,daily&appid={config('API_KEY')}")
         res = json.loads(response.text)
+        morning = []
+        evening = []
+        night = []
         for i in range(3):
             morning = [r["temp"] for r in res["hourly"] if 0 <= utc_converter(r["dt"]).hour <= 11 and utc_converter(r["dt"]).day == utc_converter(res["current"]["dt"]).day + i]
             evening = [r["temp"] for r in res["hourly"] if 12 <= utc_converter(r["dt"]).hour <= 17 and utc_converter(r["dt"]).day == utc_converter(res["current"]["dt"]).day + i]
             night = [r["temp"] for r in res["hourly"] if 18 <= utc_converter(r["dt"]).hour <= 23 and utc_converter(r["dt"]).day == utc_converter(res["current"]["dt"]).day + i]
-            if morning:
-                daily_temp.append({f"{utc_converter(res['current']['dt']).day + i}" : {"Morning" : statistics.mean(morning)}})
-            if evening:
-                daily_temp.append({f"{utc_converter(res['current']['dt']).day + i}" : {"Evening" : statistics.mean(evening)}})
-            if night:
-                daily_temp.append({f"{utc_converter(res['current']['dt']).day + i}" : {"Night" : statistics.mean(night)}})
-        
+            if not night:
+                night = [0,0,0]
+            if not evening:
+                evening = [0,0,0]
+            if not morning:
+                morning = [0,0,0]
+            # if morning:
+            #     daily_temp.append({f"{utc_converter(res['current']['dt']).day + i}" : {"Morning" : statistics.mean(morning)}})
+            # if evening:
+            #     daily_temp.append({f"{utc_converter(res['current']['dt']).day + i}" : {"Evening" : statistics.mean(evening)}})
+            # if night:
+            #     daily_temp.append({f"{utc_converter(res['current']['dt']).day + i}" : {"Night" : statistics.mean(night)}})
+            daily_temp.append({ "date": f"{utc_converter(res['current']['dt']).day + i}", "result": [{
+                "time" : "Morning",
+                "temp" : statistics.mean(morning) 
+                }, {
+                "time" : "Evening",
+                "temp" : statistics.mean(evening)
+                }, {
+                "time" : "Night",
+                "temp" : statistics.mean(night)
+                }]
+            })
         print(json.dumps(daily_temp, indent=3))
             # if utc_converter(r["dt"]).day == utc_converter(res["current"]["dt"]).day:
             #     if 0 <= utc_converter(r["dt"]).hour <= 11:
@@ -129,5 +148,10 @@ def dailyForecast(city, cities):
         # evening = [r["temp"] for r in res["hourly"] if 12 <= utc_converter(r["dt"]).hour <= 17]
         # night = [r["temp"] for r in res["hourly"] if 18 <= utc_converter(r["dt"]).hour <= 23]
         # print(morning, "\n", evening, "\n", night)
-        # return print(tabulate([f"{utc_converter(r['dt']).strftime('%A')} {utc_converter(r['dt']).hour}"] for r in res["hourly"]))
+        # for i in range(len(daily_temp)):
+        #     print(tabulate([f"{d[""]}"] for d in daily_temp))
         # print(json.dumps(res, indent=3))
+        for i in range(len(daily_temp)):
+            print(tabulate([[f"{ d['time'] } | { d['temp'] }°K"] for d in daily_temp[i]["result"]], headers=[ f"{city.title()}, {daily_temp[i]['date']} {calendar.month_name[utc_converter(res['current']['dt']).month]} {utc_converter(res['current']['dt']).year}" ] ))
+            print("\n")
+            # print(tabulate([ f"{d['time']} | {d['temp']}" ] for d in daily_temp[i]['result'], headers=[ f"{d['date']}"  for d in daily_temp ]))
