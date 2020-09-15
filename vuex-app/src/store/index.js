@@ -9,8 +9,7 @@ export default new Vuex.Store({
     products: "",
     searched: "",
     cart: [],
-    total: 0,
-    price: 0
+    price: 0,
   },
   mutations: {
     setProduct(state, payload) {
@@ -19,17 +18,27 @@ export default new Vuex.Store({
     },
     setCart(state, payload) {
       state.cart.push(payload)
-      state.total += payload.total
-      state.price += payload.price * payload.total
     },
     searchedProduct(state, payload) {
       state.searched = payload
       console.log(state.searched)
     },
     updateTotal(state, payload) {
-      state.cart[payload.index].total += payload.total
-      state.total += payload.total
-      // state.price += state.cart[payload.index].total * state.cart[payload.index].price
+      if (payload.increase) {
+        state.cart[payload.index].total++
+      }
+      if (payload.decrease) {
+        state.cart[payload.index].total--
+      }
+      console.log(state.cart[payload.index].total)
+    },
+    updatePrice(state) {
+      console.log(state.cart.length)
+      let price = 0
+      for (let index = 0; index < state.cart.length; index++) {
+        price += state.cart[index].total * state.cart[index].price
+      }
+      state.price = price
     }
   },
   actions: {
@@ -45,9 +54,11 @@ export default new Vuex.Store({
     },
     postCart({ commit }, payload) {
       commit("setCart", payload)
+      commit("updatePrice")
     },
     updateTotal({ commit }, payload) {
       commit("updateTotal", payload)
+      commit("updatePrice", payload)
     }
   },
   modules: {
