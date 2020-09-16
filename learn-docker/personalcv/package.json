@@ -1,0 +1,30 @@
+{
+  "name": "neos1803.github.io",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "http-server",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "postcss css/styles.css -o build/styles.css"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/neos1803/neos1803.github.io.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/neos1803/neos1803.github.io/issues"
+  },
+  "homepage": "https://github.com/neos1803/neos1803.github.io#readme",
+  "dependencies": {
+    "autoprefixer": "^9.8.6",
+    "live-server": "^1.2.1",
+    "postcss-cli": "^7.1.1",
+    "stylelint-config-recommended": "^3.0.0",
+    "tailwindcss": "^1.6.2",
+    "http-server": "^0.12.3"
+  }
+}
